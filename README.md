@@ -1,6 +1,12 @@
 strider-runner-core
 ===================
 
+### Changes in this fork
+The current version of [strider-docker-runner](https://github.com/Strider-CD/strider-docker-runner) does not run `npm install` during the "prepare" step, so dependencies are never installed for node projects (see [issue #18](https://github.com/Strider-CD/strider-docker-runner/issues/18) on that project). strider-docker-runner uses this module (strider-runner-core) to do the actual command running, so I've forked and modified this to add a (very hacky) fix for that issue.
+
+In this fork, `npm install` is called if another npm command (most likely `npm test`) is called and `npm install` has not yet been run. This means that `npm install` is called during the "test" phase rather than the "prepare" phase, which obviously isn't ideal from an organizational perspective, but it was the simplest fix that I found for the issue. In the future I may see if I can clean this up.
+
+### Rest of the Readme
 Just run those jobs. Decoupled from load balancing, job queues, etc.
 
 ```js
